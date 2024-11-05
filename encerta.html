@@ -1,0 +1,50 @@
+ 
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compara el teu Pokémon!</title>
+    <style>
+        /* Estil del missatge */
+        #resultat {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Intenta encertar el Pokémon!</h1>
+    <input type="text" id="inputPokemon" placeholder="Escriu el nom del Pokémon">
+    <button onclick="comparar()">COMPARA</button>
+
+    <div id="resultat"></div>
+
+    <script>
+        // Recuperar el nom del Pokémon des de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pokemonActual = urlParams.get('pokemon'); // Obtenim el nom del Pokémon
+
+        function comparar() {
+            // Obtenir el valor introduït per l'usuari
+            let inputValor = document.getElementById("inputPokemon").value.trim();
+
+            // Mostrar el resultat de la comparació
+            let resultatElement = document.getElementById("resultat");
+            if (inputValor.toLowerCase() === pokemonActual.toLowerCase()) {
+                resultatElement.textContent = "Has encertat! El Pokémon és " + pokemonActual + "!";
+            } else {
+                resultatElement.textContent = "Ho sento, no has encertat. El Pokémon era " + pokemonActual + ".";
+            }
+        }
+
+        setTimeout(function() {
+            // Tancar la finestra
+            window.close();
+        }, 2000);
+    </script>
+
+</body>
+</html>

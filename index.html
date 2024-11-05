@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Pokémon Aleatori</title>
+    <style>
+        /* Estil del nom del Pokémon */
+        #pokemon-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Imatge del Pokémon */
+        #pokemon-image {
+            width: 150px;
+            height: 150px;
+            margin-top: 10px;
+        }
+
+        /* Ficha d'informació */
+        #pokemon-info {
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        /* Estils opcionals per al text de color */
+        .agua {
+            color: blue;
+        }
+        .fuego {
+            color: red;
+        }
+        .planta {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Juga a Encertar el Pokémon!</h1>
+    <button onclick="generarPokemon()">PLAY ENCERTA</button>
+
+    <div id="pokemon-name"></div>
+    <img id="pokemon-image" src="https://flyclipart.com/thumb2/pokemon-logos-179206.png" alt="Imatge del Pokémon">
+    <div id="pokemon-info"></div>
+
+    <p><button onclick="abrirEnlace()">Obrir la finestra per comparar</button>
+
+    <script>
+        // Llista de Pokémon amb els seus tipus, imatges i descripcions
+        const pokemons = [
+            { name: "Pikachu", type: "fuego", image: "https://img.pokemondb.net/artwork/pikachu.jpg", info: "Pikachu és un Pokémon de tipus elèctric, conegut per ser la mascota de la franquícia." },
+            { name: "Bulbasaur", type: "planta", image: "https://img.pokemondb.net/artwork/bulbasaur.jpg", info: "Bulbasaur és un Pokémon de tipus planta/poison. Evoluciona a Ivysaur." },
+            { name: "Charmander", type: "fuego", image: "https://img.pokemondb.net/artwork/charmander.jpg", info: "Charmander és un Pokémon de tipus foc. Té una flama a la punta de la cua que indica la seva salut." },
+            { name: "Squirtle", type: "agua", image: "https://img.pokemondb.net/artwork/squirtle.jpg", info: "Squirtle és un Pokémon de tipus aigua. És un dels tres inicis de la regió Kanto." },
+            { name: "Eevee", type: "fuego", image: "https://img.pokemondb.net/artwork/eevee.jpg", info: "Eevee és un Pokémon molt adaptable amb diverses evolucions possibles." },
+            { name: "Jigglypuff", type: "planta", image: "https://img.pokemondb.net/artwork/jigglypuff.jpg", info: "Jigglypuff és un Pokémon de tipus normal/fada, conegut per el seu poder de fer adormir a altres Pokémon." },
+            { name: "Meowth", type: "fuego", image: "https://img.pokemondb.net/artwork/meowth.jpg", info: "Meowth és un Pokémon de tipus normal. És conegut per ser part de l'equip Rocket." },
+            { name: "Pidgey", type: "planta", image: "https://img.pokemondb.net/artwork/pidgey.jpg", info: "Pidgey és un Pokémon de tipus volador. Es troba sovint a les primeres etapes del joc." },
+            { name: "Psyduck", type: "agua", image: "https://img.pokemondb.net/artwork/psyduck.jpg", info: "Psyduck és un Pokémon de tipus aigua, que sovint té mal de cap i pot causar caos." },
+            { name: "Magikarp", type: "agua", image: "https://img.pokemondb.net/artwork/magikarp.jpg", info: "Magikarp és un Pokémon de tipus aigua, conegut per la seva debilitat, però evoluciona a Gyarados." }
+        ];
+
+        let pokemonActual; // Para almacenar el Pokémon actual
+
+        function generarPokemon() {
+
+            // Generar un número aleatori per seleccionar un Pokémon de la llista
+            let index = Math.floor(Math.random() * pokemons.length);
+
+            // Obtenir el nom, tipus, imatge i informació del Pokémon
+            pokemonActual = pokemons[index];
+
+            // Mostrar el nom del Pokémon generat
+            let pokemonNameElement = document.getElementById("pokemon-name");
+            pokemonNameElement.textContent = pokemonActual.name;
+
+            // Mostrar la imatge del Pokémon
+            let pokemonImageElement = document.getElementById("pokemon-image");
+            pokemonImageElement.src = pokemonActual.image;
+
+            // Mostrar la informació addicional del Pokémon
+            let pokemonInfoElement = document.getElementById("pokemon-info");
+            pokemonInfoElement.textContent = pokemonActual.info;
+
+            // Comprovar el tipus i aplicar el color corresponent directament
+            if (pokemonActual.type === "agua") {
+                pokemonNameElement.classList.add('agua');
+            } else if (pokemonActual.type === "fuego") {
+                pokemonNameElement.classList.add('fuego');
+            } else if (pokemonActual.type === "planta") {
+                pokemonNameElement.classList.add('planta');
+            }
+
+            setTimeout(function() {
+                window.location.href = `encerta.html?pokemon=${encodeURIComponent(pokemonActual.name)}`;
+            }, 5000);
+        }
+    
+        function abrirEnlace() {
+        window.open('encerta.html', '_blank');
+        }
+</script>
+</body>
+</html>

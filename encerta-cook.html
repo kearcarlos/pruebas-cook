@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compara el teu Pokémon!</title>
+    <style>
+        /* Estil del missatge */
+        #resultat {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Intenta encertar el Pokémon!</h1>
+    <input type="text" id="inputPokemon" placeholder="Escriu el nom del Pokémon">
+    <button onclick="comparar()">COMPARA</button>
+
+    <div id="resultat"></div>
+
+    <script>
+        // Recuperar el nom del Pokémon des de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pokemonActual = urlParams.get('pokemon'); // Obtenim el nom del Pokémon
+
+        function comparar() {
+            // Obtenir el valor introduït per l'usuari
+            let inputValor = document.getElementById("inputPokemon").value.trim();
+
+            // Mostrar el resultat de la comparació
+            let resultatElement = document.getElementById("resultat");
+            if (inputValor.toLowerCase() === pokemonActual.toLowerCase()) {
+                resultatElement.textContent = "Has encertat! El Pokémon és " + pokemonActual + "!";
+                // Guardem que s'ha encertat en una cookie
+                document.cookie = "pokemonAcertado=true; path=/"; 
+            } else {
+                resultatElement.textContent = "Ho sento, no has encertat. El Pokémon era " + pokemonActual + ".";
+                // Guardem que no s'ha encertat en una cookie
+                document.cookie = "pokemonAcertado=false; path=/";
+            }
+
+            // Tancar la finestra després de 7 segons
+            setTimeout(function() {
+                window.close(); // Tancar la finestra després de 7 segons
+            }, 7000);
+        }
+
+        // Mostrar el resultat del darrer intent (si s'ha encertat o no)
+        window.onload = function() {
+            const cookies = document.cookie.split("; ");
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.split("=");
+                if (name === "pokemonAcertado") {
+                    if (value === "true") {
+                        document.getElementById("resultat").textContent = "Has encertat el Pokémon!";
+                    } else {
+                        document.getElementById("resultat").textContent = "No has encertat el Pokémon, torna a provar!";
+                    }
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>
